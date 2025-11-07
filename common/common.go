@@ -6,13 +6,7 @@ type Lemma interface {
 	Generate() []any
 }
 
-type Type string
-
-// TODO: Add more types as needed
-const (
-	Int   Type = "int"
-	Float Type = "float"
-
-	Custom    Type = "custom"    // User-defined types
-	Undefined Type = "undefined" // For testing purposes only
-)
+type CommandResult struct {
+	Args   []string
+	Result string
+}

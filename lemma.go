@@ -9,7 +9,11 @@ import (
 var Test = core.ForAll
 
 // === TYPES ===
-var Int = common.Int
-var Float = common.Float
-var Custom = common.Custom       // Custom type for user-defined lemmas
-var Undefined = common.Undefined // Undefined type for error handling
+var Int = core.Int
+var Float = core.Float
+var Command = core.Command
+var Custom = core.Custom       // Custom type for user-defined lemmas
+var Undefined = core.Undefined // Undefined type for error handling
+
+// === Helpers ===
+type CommandResult = common.CommandResult

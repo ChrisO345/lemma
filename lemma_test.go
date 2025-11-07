@@ -2,8 +2,10 @@ package lemma_test
 
 import (
 	"fmt"
+	"strings"
 	"testing"
 
+	// "github.com/chriso345/gore/assert"
 	"github.com/chriso345/gore/assert"
 	"github.com/chriso345/lemma"
 	"github.com/chriso345/lemma/corollary"
@@ -119,6 +121,35 @@ func TestLemma_TestWithCustomLemmaNotProvided(t *testing.T) {
 	lemma.Test(mt, lemma.Custom, func(x any) bool {
 		return true
 	})
+}
+
+// === COMMAND LEMMA ===
+func TestLemma_TestCommandLemma(t *testing.T) {
+	mt := newMockT()
+
+	commandCorollary := corollary.DefaultCorollary()
+	commandCorollary.RandomCount = 5
+
+	lemma.Test(mt, lemma.Command("echo", "%d10:5:15"), func(x any) bool {
+		value := x.(lemma.CommandResult)
+		a := value.Args[1:] // Exclude command itself
+		b := strings.Split(strings.TrimSpace(value.Result), " ")
+
+		if len(a) != len(b) {
+			return false
+		}
+		for i := range a {
+			if a[i] != b[i] {
+				return false
+			}
+		}
+
+		return true
+	}, *commandCorollary)
+
+	if mt.failed {
+		t.Error("Expected test to pass with command lemma, but it failed")
+	}
 }
 
 // === CUSTOM LEMMA ===
